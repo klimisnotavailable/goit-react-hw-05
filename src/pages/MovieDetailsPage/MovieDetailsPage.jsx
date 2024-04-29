@@ -31,8 +31,8 @@ export default function FilmItem() {
         <Link to={location.state}>Go back</Link>
         {filmDetails && <FilmDescription data={filmDetails}></FilmDescription>}
         <ul>
-            <li><Link to="cast">Cast</Link></li>
-            <li><Link to="reviews">Reviews</Link></li>
+            <li><Link to="cast" state={location}>Cast</Link></li>
+            <li><Link to="reviews" state={location}>Reviews</Link></li>
         </ul>
         <Outlet> </Outlet>
     </div>
