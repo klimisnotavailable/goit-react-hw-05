@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from "react";
-import { fetchTrendingFilms } from "../../fetchTrendingFilms";
-import TrendingFilmsList from '../../components/TrendingFilmsList/TrendingFilmsList';
+import { fetchTrendingFilms } from "../../fetchFilms-api";
+import MovieList from '../../components/MovieList/MovieList';
 import Navigation from '../../components/Navigation/Navigation';
 
 function HomePage() {
@@ -15,9 +14,8 @@ function HomePage() {
         async function getTrendingFilms() {
             try {
                 setIsLoading(true)
-                const response = await axios(fetchTrendingFilms())
-                setTrendingFilmList(response.data.results)
-                console.log(trendingFilmList)
+                const response = await fetchTrendingFilms()
+                setTrendingFilmList(response.results)
             } catch (error) {
                 return Error("there is an error in fetch")
             }
@@ -32,7 +30,8 @@ function HomePage() {
 
     return <div>
         <Navigation></Navigation>
-        <TrendingFilmsList data={trendingFilmList}></TrendingFilmsList>
+        <MovieList data={trendingFilmList}></MovieList>
+        {isLoading && <p>Loading films.Please wait...</p>}
     </div>
 }
 
