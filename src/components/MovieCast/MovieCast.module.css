@@ -9,3 +9,11 @@
   flex-wrap: wrap;
   gap: 40px;
 }
+
+.character {
+  width: 200px;
+}
+
+.characterOverview {
+  width: 200px;
+}

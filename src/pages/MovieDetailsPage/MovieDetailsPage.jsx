@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilmDescription from "../../components/FilmDescription/FilmDescription";
 import Navigation from "../../components/Navigation/Navigation";
 import { useLocation, useParams } from 'react-router-dom';
@@ -10,7 +10,8 @@ export default function FilmItem() {
     const { filmId } = useParams();
     const [filmDetails, setFilmDetails] = useState(null);
     const location = useLocation();
-    console.log(location)
+    const backLinkURL = useRef(location.state ?? "/movies");
+  
 
     useEffect(() => {
 
@@ -28,7 +29,7 @@ export default function FilmItem() {
 
     return<div>
         <Navigation></Navigation>
-        <Link to={location.state}>Go back</Link>
+        <Link to={backLinkURL.current}>Go back</Link>
         {filmDetails && <FilmDescription data={filmDetails}></FilmDescription>}
         <ul>
             <li><Link to="cast" state={location}>Cast</Link></li>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navigation from "../../components/Navigation/Navigation";
 import MovieList from "../../components/MovieList/MovieList";
 import { Formik, Form, Field } from "formik";
@@ -11,7 +11,8 @@ export default function MoviesPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const urlQuery = searchParams.get("query") || "";
     const location = useLocation();
-    console.log(location)
+    const backLinkURL = useRef(location.state ?? "/movies");
+
 
     const handleChange = (inputValue) => {
         setSearchParams({
@@ -19,9 +20,10 @@ export default function MoviesPage() {
         })
     }
 
-    const handleSubmit = (values, actions) => {
-        setSearchQuery(values.query)
-        actions.resetForm()
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        setSearchQuery(event.target[0].value)
+        event.target.reset()
     };
 
     useEffect(() => {
@@ -42,22 +44,17 @@ export default function MoviesPage() {
     return <>
         <Navigation></Navigation>
         <div>
-            <Link to={location.state}>Go back</Link>
+            <Link to={backLinkURL.current}>Go back</Link>
         </div>
         <div>
-            <Formik             
-                initialValues={{
-                    query:urlQuery
-                }}
-                onSubmit={handleSubmit}               
-            >       
-            <Form onChange={e =>{handleChange(e.target.value)}}>
-                <Field name="query" type="text"  />
+            <form action="" onSubmit={handleSubmit}>    
+                <input type="text" name="query" value={urlQuery} onChange={e => { handleChange(e.target.value) }} />
                 <button type="submit">Search</button>
-            </Form>
-            </Formik>
+            </form>
         </div>
         {filmList.length > 0 && <MovieList data={filmList}></MovieList>}
     </>
 }
+
+
 

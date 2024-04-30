@@ -30,10 +30,10 @@ export default function MovieCast() {
 
                 <img src={`https://image.tmdb.org/t/p/w500/${profile_path}`} width={200} height={200} alt="" />
 
-                <div>
+                <div className={css.characterOverview}>
                     <p>{name}</p>
                     <p>
-                        <b>Character</b>{character}
+                        <b>Character</b><span className={css.character}>{character}</span>
                     </p>
                 </div>
 
